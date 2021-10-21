@@ -158,11 +158,17 @@ xpath["like_comment"] = {
     "comment_like_button": "..",
 }
 
+# xpath["like_image"] = {
+#     "like": "//section/span/button/div/span[*[local-name()='svg']/@aria-label='Like']",
+#     "unlike": "//section/span/button/div/span[*[local-name()='svg']/@aria-label='Unlike']",
+#     "play": "//*/span[contains(@aria-label, 'Play')]",
+# }
 xpath["like_image"] = {
-    "like": "//section/span/button/div/span[*[local-name()='svg']/@aria-label='Like']",
-    "unlike": "//section/span/button/div/span[*[local-name()='svg']/@aria-label='Unlike']",
+    "like": "//section/span/button/div[*[local-name()='svg']/@aria-label='Like']",
+    "unlike": "//section/span/button/div[*[local-name()='svg']/@aria-label='Unlike']",
     "play": "//*/span[contains(@aria-label, 'Play')]",
 }
+# /html/body/div[1]/section/main/div/div/article/div/div[3]/div/div/section[1]/span[1]/button/div[1]/svg
 
 xpath["like_from_image"] = {
     "main_article": "//main//article//div//div[1]//div[1]//a[1]"

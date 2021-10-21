@@ -1,5 +1,6 @@
 """ Module that handles the like features """
 # import built-in & third-party modules
+import logging
 import random
 import re
 from re import findall
@@ -740,8 +741,11 @@ def like_image(browser, username, blacklist, logger, logfolder, total_liked_img)
 
     media = "Image"  # by default
     like_xpath = read_xpath(like_image.__name__, "like")
+    logging.info("like_xpath: {}", like_xpath)
     unlike_xpath = read_xpath(like_image.__name__, "unlike")
+    logging.info("unlike_xpath: {}", unlike_xpath)
     play_xpath = read_xpath(like_image.__name__, "play")
+    logging.info("play_xpath: {}", play_xpath)
 
     play_elem = browser.find_elements_by_xpath(play_xpath)
     if len(play_elem) == 1:
@@ -759,17 +763,22 @@ def like_image(browser, username, blacklist, logger, logfolder, total_liked_img)
         browser.execute_script("arguments[0].scrollIntoView(true);", element)
 
     # find first for like element
+    logging.info("like_xpath: {}", like_xpath)
+
     like_elem = browser.find_elements_by_xpath(like_xpath)
+
+    logging.info("like_xpath: {}", like_xpath)
 
     if len(like_elem) == 1:
         # sleep real quick right before clicking the element
         sleep(2)
         like_elem = browser.find_elements_by_xpath(like_xpath)
+        logging.info("like_elem: {}", like_elem)
         if len(like_elem) > 0:
             click_element(browser, like_elem[0])
         # check now we have unlike instead of like
         liked_elem = browser.find_elements_by_xpath(unlike_xpath)
-
+        logging.info("liked_elem: {}", liked_elem)
         if len(liked_elem) == 1:
             logger.info("--> {} liked!".format(media))
             Event().liked(username)
@@ -798,7 +807,7 @@ def like_image(browser, username, blacklist, logger, logfolder, total_liked_img)
             logger.info(
                 "--> {} was not able to get liked! maybe blocked?".format(media)
             )
-            sleep(120)
+            sleep(random.randint(2, 4))
 
     else:
         liked_elem = browser.find_elements_by_xpath(unlike_xpath)

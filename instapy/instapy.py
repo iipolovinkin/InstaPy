@@ -319,6 +319,7 @@ class InstaPy:
         Settings.show_logs = show_logs or None
         self.multi_logs = multi_logs
         self.logfolder = get_logfolder(self.username, self.multi_logs)
+        logging.info("self.logfolder: {}", self.logfolder)
         self.logger = self.get_instapy_logger(self.show_logs, log_handler)
 
         get_database(make=True)  # IMPORTANT: think twice before relocating
@@ -3076,7 +3077,7 @@ class InstaPy:
         return self
 
     def interact_user_followers(
-        self, usernames: list, amount: int = 10, randomize: bool = False
+        self, usernames: list, amount: int = 10, randomize: bool = False, exist_persons_file: str = None
     ):
         """
         Interact with the people that a given user is followed by.
@@ -3086,6 +3087,7 @@ class InstaPy:
         :param usernames: List of users to interact with their followers.
         :param amount: Amount of followers to interact with.
         :param randomize: If followers should be chosen randomly.
+        :param exist_persons_file: File for save interacted followers.
         """
 
         if self.aborting:
@@ -3162,9 +3164,33 @@ class InstaPy:
                 "interaction.".format(len(person_list), user)
             )
 
+            self.logger.info(
+                "Grabbed {} usernames from '{}'s `Followers` to do "
+                "interaction.".format(person_list, user)
+            )
+            if exist_persons_file:
+                file_read = open(exist_persons_file, "r")
+                person_splitter = ','
+                exist_persons = set(file_read.read().split(person_splitter))
+                file_read.close()
+                person_list = set(person_list).difference(exist_persons)
+
+            print(person_list)
+            self.logger.info(
+                "Grabbed {} usernames from '{}'s `Followers` to do "
+                "interaction.".format(person_list, user)
+            )
+
+            print('len(person_list) = {}'.format(len(person_list)))
+
             interacted_personal = 0
 
             for index, person in enumerate(person_list):
+                if exist_persons_file:
+                    file_add = open(exist_persons_file, "a")
+                    file_add.write(person_splitter + person)
+                    file_add.close()
+
                 if self.quotient_breach:
                     self.logger.warning(
                         "--> Like quotient reached its peak!"
