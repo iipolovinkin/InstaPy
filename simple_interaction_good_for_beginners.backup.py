@@ -17,19 +17,21 @@ from instapy import smart_run
 # get a session!
 session = InstaPy(username='', password='')
 
+
 photo_comments = ['Красиво :heart:',
     'Вы прекрасны :heart_eyes:',
-    'Супер :fire:',
-    'Невероятная атмосфера :fire:',
+    'Классно :thumbsup:',
+    'Фото супер :fire:',
+    'Атмосферно :fire:',
+    'Невероятное фото :fire:',
     'Тут точно лайк :heart_eyes:',
-    'Очень красиво :heart_eyes:',
+    'Очень :heart_eyes:',
     'Как же красиво :heart:']
 
 # let's go! :>
 with smart_run(session):
     # settings
-    # session.set_user_interact(amount=2, randomize=True, percentage=100)
-    session.set_user_interact(amount=3, percentage=100)
+    session.set_user_interact(amount=2, randomize=True, percentage=100)
     session.set_relationship_bounds(enabled=True,
                                     potency_ratio=None,
                                     delimit_by_numbers=True,
@@ -44,13 +46,14 @@ with smart_run(session):
     # session.set_do_follow(enabled=True, percentage=50, times=1)
     session.set_comments(photo_comments)
     session.set_ignore_if_contains([])
-    session.set_action_delays(enabled=True, like=10)
+    # session.set_action_delays(enabled=True, like=1)
 
     # activity
-    # session.interact_user_followers(['malina_glina'], amount=340)
-    progress_file: str = 'progress\\progress1.txt'
-    # users: cleopatra_rnd
-    session.interact_user_followers('probrow_bar', amount=100, exist_persons_file=progress_file)
+    # session.interact_user_followers([''], amount=340)
+    bfy_file: str = 'C:\\work\\pypr\\InstaPy\\progress\\bfy.txt'
+    session.interact_user_followers(['garderob_naya'], amount=200, exist_persons_file=bfy_file)
+    # session.interact_user_followers([''], amount=200)
+    # session.interact_user_followers([''], amount=100)
 
     """ Joining Engagement Pods...
     """

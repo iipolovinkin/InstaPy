@@ -83,6 +83,8 @@ def set_selenium_local_session(
     else:
         firefox_profile = webdriver.FirefoxProfile()
 
+    print(firefox_profile)
+
     if browser_executable_path is not None:
         firefox_options.binary = browser_executable_path
 
